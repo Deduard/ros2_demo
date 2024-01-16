@@ -10,11 +10,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(message_filters REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 
 set(dependencies
         rclcpp
         rclcpp_components
+        rclcpp_lifecycle
         std_msgs
+        lifecycle_msgs
         message_filters
 )
 
@@ -24,6 +27,15 @@ ament_target_dependencies(publisher_node ${dependencies})
 
 install(
   TARGETS publisher_node
+  LIBRARY DESTINATION lib
+)
+
+add_library(publisher_lifecycle_node SHARED src/publisher_lifecycle_node.cpp)
+rclcpp_components_register_nodes(publisher_lifecycle_node "PublisherLifecycleNode")
+ament_target_dependencies(publisher_lifecycle_node ${dependencies})
+
+install(
+  TARGETS publisher_lifecycle_node
   LIBRARY DESTINATION lib
 )
 
