@@ -52,26 +52,6 @@ def generate_launch_description():
             output='screen',
     )
     
-    # container_2 = ComposableNodeContainer(
-    #         name='container_2',
-    #         namespace='',
-    #         package='rclcpp_components',
-    #         executable='component_container_mt',
-    #         composable_node_descriptions=[
-    #                 ComposableNode(
-    #                 package='composable_nodes_test_pkg',
-    #                 plugin='SubscriberNode',
-    #                 name='subscriber_node1',
-    #             ),
-    #             ComposableNode(
-    #                 package='composable_nodes_test_pkg',
-    #                 plugin='SubscriberNode',
-    #                 name='subscriber_node2',
-    #             ),
-    #         ],
-    #         output='screen',
-    # )
-    
     def invoke_lifecycle_cmd(node_name, verb):
         ros2_exec = FindExecutable(name='ros2')
         return ExecuteProcess(
@@ -83,7 +63,6 @@ def generate_launch_description():
     activate_cmd = invoke_lifecycle_cmd('publisher_node3', 'activate')
 
     return LaunchDescription([container,
-                              TimerAction(period=2.0, actions=[configure_cmd]),
-                              TimerAction(period=3.0, actions=[activate_cmd])
-                              #container_2
+                              TimerAction(period=0.5, actions=[configure_cmd]),
+                              TimerAction(period=1.0, actions=[activate_cmd])
                             ])
